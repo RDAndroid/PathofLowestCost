@@ -31,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
                     loadResult(grString);
                 } else {
                     Toast.makeText(MainActivity.this, "Ivalid items", Toast.LENGTH_SHORT).show();
-
+                    ((TextView) findViewById(R.id.tvCost)).setText("Invalid matrix");
+                    ((TextView) findViewById(R.id.tvResult)). setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.tvPath)).setVisibility(View.GONE);
                 }
             }
         });
 
     }
     private boolean validArray(int[][] elements) {
-        if (elements.length < 1 || elements.length > 10 || elements[0].length < 5 || elements[0].length > 100 ) {
+        if (elements.length < 1 || elements.length > 10 || elements[0].length < 1 || elements[0].length > 100 ) {
             return false;
         } else {
             return true;
