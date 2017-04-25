@@ -18,10 +18,9 @@ public class Utils {
 
     public static int[][] strintToArray(String items)
     {
-        try {
-            String[] rows = items.split("\n");
-            String[] frstClmns = rows[0].split("\\s+");
-            int[][] output = new int[rows.length][frstClmns.length];
+        String[] rows = items.split("\n");
+        String[] frstClmns = rows[0].split("\\s+");
+        int[][] output = new int[rows.length][frstClmns.length];
             for (int row = 0; row < rows.length; row++) {
                 String[] columns = rows[row].split("\\s+");
                 for (int column = 0; column < columns.length; column++) {
@@ -32,18 +31,80 @@ public class Utils {
             }
 
             return output;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return new int[0][0];
-        }
 
     }
+    public static void findBestPath(int [][] matrix)
+    {
+        int [][] cost = new int[2][matrix[0].length];
+        cost[0][0] = matrix[0][0];
 
+        for(int i = 0; i < matrix.length; i++)
+        {
+            int iUp = 0;
+            int iAt = 0;
+            if(i % 2 == 0)
+            {
+                iUp = 1;
+                iAt = 0;
+            }
+            else
+            {
+                iUp = 0;
+                iAt = 1;
+            }
+            for(int j = 0; j < matrix[0].length; j++)
+            {
+                if(i+1 < matrix.length && cost[iAt][j] + matrix[i+1][j] > cost[iUp][j])
+                {
+                    cost[iUp][j] = cost[iAt][j] + matrix[i+1][j] ;
+                }
+                if(j+1 < matrix.length && cost[iAt][j] + matrix[i][j+1] > cost[iAt][j+1])
+                {
+                    cost[iAt][j+1] = cost[iAt][j] + matrix[i][j+1] ;
+                }
+            }
+        }
+        if(matrix.length % 2 == 0)
+        {
+            System.out.println("Max is " + cost[1][matrix[0].length-1]);
+        }
+        else
+        {
+            System.out.println("Max is " + cost[0][matrix[0].length-1]);
+        }
+    }
+    public static Boolean validateInput(String inputText)
+    {
+        Boolean isVaildInput=true;
+        int columnsCount=-1;
+        String rows[] = inputText.split("\n+");
+        if (inputText.length()==0)
+        {
+            return false;
+        }
+        for (String row:rows)
+        {
+            if(columnsCount==-1)
+            {
+                columnsCount=row.split(" +").length;
+            }
+            if(columnsCount!=row.split(" +").length)
+            {
+                return false;
+            }
+        }
+        return isVaildInput;
+    }
     public static PathResult calculateLowestCostPath(String input)
     {
 
+        if(validateInput(input))
+        {
             int[][] inputArray = Utils.strintToArray(input);
             return findLowestCostPath(inputArray);
+        }
+        else
+            return null;
 
     }
     public static PathResult findLowestCostPath(int[][] inputMatrix)

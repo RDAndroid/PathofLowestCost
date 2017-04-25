@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvResult)).setText(String.valueOf(pathResult.getLowestCost()));
             ((TextView) findViewById(R.id.tvPath)).setText(String.valueOf(pathResult.getLowestCostPath()));
 
+        }else {
+            Toast.makeText(MainActivity.this, "Ivalid items,Recheck inputs", Toast.LENGTH_SHORT).show();
+
         }
 
     }
